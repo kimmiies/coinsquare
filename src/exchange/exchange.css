@@ -1,0 +1,9 @@
+.exchange {
+  width: 400px;
+  height: 650px;
+  border: 1px solid navy;
+  background-color: lightblue; }
+  .exchange .account-balance {
+    color: navy; }
+    .exchange .account-balance__label {
+      text-decoration: underline; }
