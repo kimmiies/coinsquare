@@ -17,3 +17,18 @@ Thoughts:
 
 Next Step:
 - Fetch Bitcoin Price
+
+
+#Iteration Two
+
+- Using axios instead of fetch api for a change. Was having trouble with cors when trying to make a request from my localHost
+  With the following error:
+    `Failed to load https://api.bitfinex.com/v1/pubticker/btcusd: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access.`
+  My workaround was to install a Chrome Extension Allow-Control-Allow-Origi which has allowed me access
+- Build out the basic form structure of the trading ui. Still using local state and function names are not yet the greatest
+- TO NOTE: Since I am setting the default buy/sell currencies, I am only triggering an API call when the user enters an amount to sell. Using the blur event handler to capture when user interacts with this input field and then changes focus
+
+Next steps:
+- Move some local state into state tree
+- Add some validations
+- Enable/disable trade button
