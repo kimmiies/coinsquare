@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import globalReducer from './reducers/globalReducer';
+import globalReducer from './store/globalReducer';
 
 /* Root */
 const rootElement = document.getElementById('root')

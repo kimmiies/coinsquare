@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AccountBalance from '../accountBalance/accountBalance'
-import { buy, sell } from '../reducers/actions'
+import { buy, sell } from '../store/actions'
 import axios from 'axios'
 import './exchange.css';
 
-class Exchange extends PureComponent {
+export class Exchange extends PureComponent {
   constructor(props) {
     super(props)
 
