@@ -4,7 +4,10 @@ const initialState = {
   id: null,
   name: null,
   email: null,
-  accountBalances: []
+  accountBalances: [
+    'usd': 157.69,
+    'btc': 0,
+  ]
 }
  
 const userReducer = (state = initialState, action) => { 

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
+import AccountBalance from '../accountBalance/accountBalance'
 import axios from 'axios'
 import './exchange.css';
 
@@ -59,40 +60,36 @@ class Exchange extends PureComponent {
     this.setState({ [target.name]: target.value })
   }
 
-  //Failed to load https://api.bitfinex.com/v1/pubticker/btcusd: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access.
 
   render() {
     const { usdBalance, coinBalance, btcBalance } = this.state
     return (
       <div className="exchange">
-        <div className="account-balance">
-          <h1 className="account-balance__label">Account Balance</h1>
-          <p>{`USD $${usdBalance}`}</p>
-          <p>{`BTC $${btcBalance}`}</p>
-        </div>
+        <AccountBalance usdBalance={usdBalance} btcBalance={btcBalance} />
 
-        <form>
-          <h5>Select Your Currency:</h5>
-          <p>{this.state.saleCurrency}</p>
+        <form className='trade-form'>
+          <h5 className='trade-form__label'>Trade</h5>
+          <p className='trade-form__input trade-form__input--bold'>{this.state.saleCurrency}</p>
 
-          <label>Select amount to trade:
-            <input type="text"
-              name="salePrice"
-              onBlur={this.handleBlur}
-              value={this.state.salePrice}
-              onChange={this.handleChange}
-              placeholder="Enter amount here"
-              className=""
-              autoFocus
-              required/>
-          </label>
+          <input type="text"
+            name="salePrice"
+            onBlur={this.handleBlur}
+            value={this.state.salePrice}
+            onChange={this.handleChange}
+            placeholder="Enter your amount"
+            className='trade-form__input'
+            autoFocus
+            required/>
 
-          <h5>Select What you'd like to buy:</h5>
-          <p>{this.state.buyCurrency}</p>
+          <h5 className='trade-form__label'>For</h5>
+          <p className='trade-form__input trade-form__input--bold'>{this.state.buyCurrency}</p>
 
-          <div>Your amount: {coinBalance}</div>
+          { coinBalance
+            ? <p className='trade-form__input'>{coinBalance}</p>
+            : <p className='trade-form__input'>Display Quote</p>
+          }
 
-          <button onClick={this.trade}>Trade </button>
+          <button onClick={this.trade} className='trade-form__submit-btn'>Trade </button>
         </form>
       </div>
     );

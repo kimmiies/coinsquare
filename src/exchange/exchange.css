@@ -1,9 +1,61 @@
 .exchange {
-  width: 400px;
-  height: 650px;
-  border: 1px solid navy;
-  background-color: lightblue; }
-  .exchange .account-balance {
-    color: navy; }
-    .exchange .account-balance__label {
-      text-decoration: underline; }
+  width: 280px;
+  height: 450px;
+  background-color: #F8F8F8;
+  padding: 10px 45px 50px;
+  text-align: left;
+  margin: 0 auto; }
+
+@media screen and (max-width: 400px) {
+  .exchange {
+    width: 90%;
+    height: 100%; } }
+
+.account-balance {
+  margin: 20px;
+  font-size: 14px; }
+
+.account-balance__currency {
+  font-size: 15px;
+  text-transform: uppercase;
+  margin: 0;
+  margin: 5px 20px; }
+
+.account-balance__amount {
+  font-size: 14px;
+  margin: 0 15px; }
+
+.trade-form__label {
+  display: block;
+  margin: 8px;
+  padding-left: 10px;
+  font-weight: 400; }
+
+.trade-form__input {
+  padding: 10px 20px;
+  margin: 0 8px 16px 8px;
+  border: 1px solid black;
+  font-size: 14px;
+  color: #757575; }
+
+.trade-form__input--bold {
+  text-transform: uppercase;
+  font-size: 15px;
+  color: black; }
+
+input.trade-form__input {
+  display: block;
+  width: 94%;
+  background-color: inherit;
+  box-sizing: border-box; }
+
+input.trade-form__input:focus {
+  outline: none; }
+
+.trade-form__submit-btn {
+  height: 55px;
+  width: 100%;
+  background: #2842E0;
+  color: white;
+  letter-spacing: 2px;
+  font-size: 16px; }
