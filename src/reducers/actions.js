@@ -1,24 +1,21 @@
 /* Actions Types */
-export const GET_ACCOUNT_BALANCE = "GET_ACCOUNT_BALANCE"
-export const IS_TRADE_ENABLED = "IS_TRADE_ENABLED"
+export const BUY = "BUY"
+export const SELL = "SELL"
 
 
 /* Actions Creators */
-
-/* ----------------------------
- * Keeping things simple for first iteration
- * The functionality of these action creators and their relation to state will change
- * No payload. Simply want to test that reducers are doing their job when actions are dispatched
- *-------------------------------*/
-
-export function getAccountBalance(){
+export function buy(currency, price){
   return {
-    type: GET_ACCOUNT_BALANCE,
+    type: BUY,
+    currency,
+    price,
   }
 }
 
-export function isTradeEnabled(){
+export function sell(currency, price){
   return {
-    type: IS_TRADE_ENABLED,
+    type: SELL,
+    currency,
+    price,
   }
 }

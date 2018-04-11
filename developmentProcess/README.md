@@ -32,3 +32,25 @@ Next steps:
 - Move some local state into state tree
 - Add some validations
 - Enable/disable trade button
+
+#Iteration Three
+
+- Pulled out the Account Balance markup into separate <AccountBalance /> stateless component
+- Kept styles within app.css and exchange.scss for simplicity
+- Using BEM (Block, Element, Modifier) convention to help with readability and structure within stylesheets
+- Added simple media query for mobile and up
+
+Next steps:
+- Move some local state into state tree
+- Add some validations
+- Enable/disable trade button
+
+#Iteration Four
+
+- Importing state tree and BUY/SELL action creators into <Exchange />
+- Wiring everything up!
+- Added validation error if amount selling exceeds funds
+- TO NOTE: Not yet handling error cases on network request. Not yet enabling/disabling the trade button
+
+Next steps:
+- Add tests

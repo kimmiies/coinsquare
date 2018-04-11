@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import AccountBalance from '../accountBalance/accountBalance'
+import { buy, sell } from '../reducers/actions'
 import axios from 'axios'
 import './exchange.css';
 
@@ -9,50 +11,46 @@ class Exchange extends PureComponent {
     super(props)
 
     this.state = {
-      usdBalance: 157,
-      btcBalance: 0,
       saleCurrency: 'usd',
-      salePrice: '',
       buyCurrency: 'btc',
+      usdQuote: '',
       buyPrice: null,
-      coinBalance: null,
+      btcQuote: null,
       error: null,
     }
 
-    this.getPrice = this.getPrice.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
+    this.getQuote = this.getQuote.bind(this)
+    this.getLastPrice = this.getLastPrice.bind(this)
     this.trade = this.trade.bind(this)
   }
 
-  getPrice() {
+  getLastPrice() {
     return axios.get('https://api.bitfinex.com/v1/pubticker/btcusd')
     .then((response) => {
       this.setState({ buyPrice: response.data.last_price })
     })
+    .catch(err => console.log('err', err))
   }
 
   trade(event) {
     event.preventDefault()
+    const { usdQuote, saleCurrency, buyCurrency, btcQuote } = this.state
 
-    const updatedUsdBalance = this.state.usdBalance - this.state.salePrice
-    const updatedCtcBalance = this.state.btcBalance + this.state.coinBalance
-
-    this.setState({
-      usdBalance: updatedUsdBalance,
-      btcBalance: updatedCtcBalance
-    })
+    this.props.sell(saleCurrency, usdQuote)
+    this.props.buy(buyCurrency, btcQuote)
   }
 
-  handleBlur() {
-    if (this.state.salePrice <= this.state.usdBalance) {
-      this.getPrice().then(() => {
-        const quote = (this.state.salePrice / this.state.buyPrice).toFixed(3)
+  getQuote() {
+    if (this.state.usdQuote <= this.props.usd) {
+      this.getLastPrice().then(() => {
+        const quote = (this.state.usdQuote / this.state.buyPrice).toFixed(3)
 
-        this.setState({ coinBalance: quote })
+        this.setState({ btcQuote: parseFloat(quote) })
       })
+      .catch(err => console.log('err', err))
     } else {
-      this.setState({ error: "have entered an amount greater than your balance"})
+      this.setState({ error: "You have exceeded your available funds"})
     }
   }
 
@@ -60,32 +58,34 @@ class Exchange extends PureComponent {
     this.setState({ [target.name]: target.value })
   }
 
-
   render() {
-    const { usdBalance, coinBalance, btcBalance } = this.state
+    const { saleCurrency, buyCurrency, btcQuote, usdQuote, error} = this.state
+    const { usd, btc } = this.props
+
     return (
       <div className="exchange">
-        <AccountBalance usdBalance={usdBalance} btcBalance={btcBalance} />
+        <AccountBalance usd={usd} btc={btc} />
 
         <form className='trade-form'>
           <h5 className='trade-form__label'>Trade</h5>
-          <p className='trade-form__input trade-form__input--bold'>{this.state.saleCurrency}</p>
+          <p className='trade-form__input trade-form__input--bold'>{saleCurrency}</p>
 
-          <input type="text"
-            name="salePrice"
-            onBlur={this.handleBlur}
-            value={this.state.salePrice}
+          <input type="number"
+            name="usdQuote"
+            onBlur={this.getQuote}
+            value={usdQuote}
             onChange={this.handleChange}
             placeholder="Enter your amount"
             className='trade-form__input'
             autoFocus
             required/>
+          { error && <p className="error">{error}</p>}
 
           <h5 className='trade-form__label'>For</h5>
-          <p className='trade-form__input trade-form__input--bold'>{this.state.buyCurrency}</p>
+          <p className='trade-form__input trade-form__input--bold'>{buyCurrency}</p>
 
-          { coinBalance
-            ? <p className='trade-form__input'>{coinBalance}</p>
+          { btcQuote
+            ? <p className='trade-form__input'>{btcQuote}</p>
             : <p className='trade-form__input'>Display Quote</p>
           }
 
@@ -96,5 +96,20 @@ class Exchange extends PureComponent {
   }
 }
 
+Exchange.propTypes = {
+  usd: PropTypes.number.isRequired,
+  btc: PropTypes.number.isRequired,
+  buy: PropTypes.func.isRequired,
+  sell: PropTypes.func.isRequired,
+}
 
-export default Exchange;
+const mapStateToProps = ({ userReducer }) => {
+  return {
+    usd: userReducer.usd,
+    btc: userReducer.btc,
+  }
+}
+
+const mapDispatchToProps = { buy, sell }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Exchange)

@@ -1,21 +1,28 @@
-import { GET_ACCOUNT_BALANCE } from './actions'
+import { BUY, SELL } from './actions'
  
 const initialState = {
   id: null,
   name: null,
   email: null,
-  accountBalances: [
-    'usd': 157.69,
-    'btc': 0,
-  ]
+  usd: 156.12,
+  btc: 0,
 }
  
 const userReducer = (state = initialState, action) => { 
   switch (action.type) {
-    case GET_ACCOUNT_BALANCE:
+    case SELL:
+      const decreasedBalance = (state[action.currency] - action.price).toFixed(3)
+
       return {
         ...state,
-        id: '123',
+        [action.currency]: parseFloat(decreasedBalance),
+      }
+    case BUY:
+      const increasedBalance = (state[action.currency] + action.price).toFixed(3)
+
+      return {
+        ...state,
+        [action.currency]: parseFloat(increasedBalance),
       }
     default:
       return state

@@ -60,6 +60,16 @@ input.trade-form__input {
   box-sizing : border-box;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #F8F8F8 inset;
+}
+
 input.trade-form__input:focus {
   outline: none;
 }
@@ -71,4 +81,14 @@ input.trade-form__input:focus {
   color: white;
   letter-spacing: 2px;
   font-size: 16px;
+}
+
+.trade-form__submit-btn:focus {
+  outline: none;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  text-align: center;
 }
