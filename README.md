@@ -24,7 +24,7 @@ Pull `last_price` from the Bitfinex(BFX) public API:
 * Include some form of Testing
 * Avoid using frontend libraries such as Bootstrap
 
-## #Instructions
+### Instructions
 * Your account is pre*funded with $156.12 USD. User can trade with any amount
 * User can trade any amount <= $156.12 USD
 * Fetch the market price of Bitcoin through the public API
